@@ -87,6 +87,48 @@ docker run --rm -p 7860:7860 qa-ml
 
 Depois acesse **http://127.0.0.1:7860** (não use `http://0.0.0.0:7860` no navegador).
 
+### Exemplo de uso do modelo (`POST /predict`)
+
+Exemplo com `curl`:
+
+```bash
+curl -X POST "http://127.0.0.1:7860/predict" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "Temperatura": 27.5,
+    "Umidade": 62.0,
+    "CO2": 780.0,
+    "CO": 3.2,
+    "Pressao_Atm": 1013.0,
+    "NO2": 42.0,
+    "SO2": 18.0,
+    "O3": 25.0
+  }'
+```
+
+Resposta de sucesso (exemplo):
+
+```json
+{
+  "ok": true,
+  "qualidade_ambiental": "Boa",
+  "warnings": [],
+  "details": "Probabilidades (por classe):\n- Boa: 82,10%\n- Moderada: 14,75%\n- Ruim: 3,15%"
+}
+```
+
+Resposta de erro de validação (exemplo):
+
+```json
+{
+  "ok": false,
+  "errors": [
+    "- Umidade: 130 % é incompatível; esperado [0, 100] %."
+  ],
+  "warnings": []
+}
+```
+
 ---
 
 ## Hugging Face
