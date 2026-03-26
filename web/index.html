@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Qualidade Ambiental (IA)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="bg">
+      <div class="blob blob--a"></div>
+      <div class="blob blob--b"></div>
+      <div class="blob blob--c"></div>
+    </div>
+
+    <header class="header">
+      <div class="container header__inner">
+        <div class="brand">
+          <div class="brand__mark" aria-hidden="true">IA</div>
+          <div class="brand__text">
+            <div class="brand__title">Qualidade Ambiental (IA)</div>
+            <div class="brand__subtitle">Sustentabilidade + tecnologia</div>
+          </div>
+        </div>
+        <div class="badge">
+          <span class="badge__dot" aria-hidden="true"></span>
+          Classificação
+        </div>
+      </div>
+    </header>
+
+    <main class="container main">
+      <section class="hero glass">
+        <p class="hero__text">
+          Informe as mesmas variáveis do dataset de treino. A saída é a classe
+          <strong>Qualidade_Ambiental</strong> prevista pelo modelo exportado.
+        </p>
+        <p class="hero__notice">
+          <strong>Este conteúdo é destinado apenas para fins educacionais.</strong>
+          Os dados exibidos são ilustrativos e podem não corresponder a situações reais.
+        </p>
+      </section>
+
+      <section class="grid">
+        <section class="panel glass">
+          <div class="panel__head">
+            <h2>Entradas</h2>
+            <p>Preencha os parâmetros ambientais</p>
+          </div>
+
+          <form id="predict-form" class="form">
+            <div class="fields">
+              <div class="field">
+                <label for="Temperatura">Temperatura</label>
+                <input id="Temperatura" name="Temperatura" type="number" step="any" placeholder="Ex.: 22" />
+              </div>
+              <div class="field">
+                <label for="Umidade">Umidade</label>
+                <input id="Umidade" name="Umidade" type="number" step="any" placeholder="Ex.: 50" />
+              </div>
+              <div class="field">
+                <label for="CO2">CO2</label>
+                <input id="CO2" name="CO2" type="number" step="any" placeholder="Ex.: 1200" />
+              </div>
+              <div class="field">
+                <label for="CO">CO</label>
+                <input id="CO" name="CO" type="number" step="any" placeholder="Ex.: 25" />
+              </div>
+              <div class="field">
+                <label for="Pressao_Atm">Pressão Atmosférica</label>
+                <input id="Pressao_Atm" name="Pressao_Atm" type="number" step="any" placeholder="Ex.: 1013" />
+              </div>
+              <div class="field">
+                <label for="NO2">NO2</label>
+                <input id="NO2" name="NO2" type="number" step="any" placeholder="Ex.: 40" />
+              </div>
+              <div class="field">
+                <label for="SO2">SO2</label>
+                <input id="SO2" name="SO2" type="number" step="any" placeholder="Ex.: 30" />
+              </div>
+              <div class="field">
+                <label for="O3">O3</label>
+                <input id="O3" name="O3" type="number" step="any" placeholder="Ex.: 50" />
+              </div>
+            </div>
+
+            <div class="actions">
+              <button id="btn-predict" class="btn" type="submit">
+                <span class="btn__shine" aria-hidden="true"></span>
+                Prever
+              </button>
+              <button id="btn-reset" class="btn btn--ghost" type="button">Limpar</button>
+            </div>
+          </form>
+        </section>
+
+        <section class="panel glass panel--result">
+          <div class="panel__head">
+            <h2>Resultado</h2>
+            <p>Qualidade_Ambiental prevista e detalhes</p>
+          </div>
+
+          <div class="result">
+            <div class="result__card">
+              <div class="result__label">Qualidade_Ambiental prevista</div>
+              <div id="predicted" class="result__value">—</div>
+            </div>
+
+            <div class="result__details">
+              <div class="result__label">Detalhes</div>
+              <pre id="details" class="details">Preencha os campos e clique em “Prever”.</pre>
+            </div>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container footer__inner">
+        <span>Qualidade Ambiental (IA)</span>
+        <span class="footer__sep">•</span>
+        <span>API: <code>/predict</code></span>
+      </div>
+    </footer>
+
+    <script src="/app.js"></script>
+  </body>
+</html>
+
