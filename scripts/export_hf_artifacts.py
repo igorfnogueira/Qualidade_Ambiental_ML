@@ -82,7 +82,12 @@ def main() -> None:
         "model_name": args.model,
         "target": args.target,
         "features": FEATURE_COLUMNS,
-        "csv": str(args.csv.resolve()),
+        # Caminho relativo quando possível (evita paths absolutos da máquina local).
+        "csv": (
+            str(args.csv.relative_to(ROOT))
+            if args.csv.resolve().is_relative_to(ROOT.resolve())
+            else args.csv.name
+        ),
     }
     (args.out_dir / "metadata.json").write_text(
         json.dumps(meta, ensure_ascii=False, indent=2),

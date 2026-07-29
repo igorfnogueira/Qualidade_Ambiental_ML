@@ -37,7 +37,7 @@ O script `main.py` treina **todos** os modelos configurados e indica o de melhor
 | `scripts/push_hf_space.ps1` | Ajuda no `git push` do clone local do Space (token via `HF_TOKEN`). |
 | `hf_space/` | Versão alternativa com Gradio (referência; deploy principal é Docker + `qa_api`). |
 
-Pastas como `Qualidade_Ambiental_ML/` e `api/` na raiz podem estar no `.gitignore` (clone aninhado / API legada); o fluxo oficial de deploy usa `qa_api/`.
+Clones aninhados do Space e a API legada `api/` ficam no `.gitignore`; o fluxo oficial de deploy usa `qa_api/`.
 
 ---
 
