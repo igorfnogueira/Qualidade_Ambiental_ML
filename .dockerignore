@@ -16,6 +16,7 @@ api/
 AUDITORIA_PORTFOLIO.md
 *.md
 !README.md
+!README.pt-BR.md
 .DS_Store
 Thumbs.db
 .idea/

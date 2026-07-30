@@ -177,9 +177,6 @@ hf_docker_space/HF_Qualidade_Ambiental_ML/
 # API legada na raiz; deploy e Docker usam qa_api/
 api/
 
-# Docs internos de auditoria (não publicar)
-AUDITORIA_PORTFOLIO.md
-
 # SO / IDE
 .DS_Store
 Thumbs.db
