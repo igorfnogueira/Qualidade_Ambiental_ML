@@ -4,7 +4,7 @@
 
 **Language / Idioma:** [English](README.md) | [Português](README.pt-BR.md)
 
-Pipeline de **classificação** supervisionada que prevê a qualidade ambiental (`Qualidade_Ambiental`) a partir de variáveis de sensores — temperatura, umidade, gases (CO₂, CO, NO₂, SO₂, O₃) e pressão atmosférica. Inclui EDA, treino com vários modelos, rastreamento opcional no **MLflow** e uma aplicação web com **FastAPI** para inferência com modelo serializado.
+Pipeline de **classificação** supervisionada que prevê a qualidade ambiental (`Qualidade_Ambiental`) a partir de variáveis de sensores — temperatura, umidade, gases (CO₂, CO, NO₂, SO₂, O₃) e pressão atmosférica. Inclui EDA, treino com vários modelos, rastreamento no **MLflow** (ativo por padrão) e uma aplicação web com **FastAPI** para inferência com modelo serializado.
 
 **Repositório:** [igorfnogueira/ml-python-environmental-quality](https://github.com/igorfnogueira/ml-python-environmental-quality)  
 **Demo (Hugging Face Space):** [igorfn20/Qualidade_Ambiental_ML](https://huggingface.co/spaces/igorfn20/Qualidade_Ambiental_ML)
@@ -36,7 +36,7 @@ O dataset tem **10.000** linhas e **9** colunas (**8** features + alvo). Após c
 
 | Caminho | Descrição |
 |---------|-----------|
-| `main.py` | Orquestra EDA → pré-processamento → treino → avaliação → MLflow (opcional) |
+| `main.py` | Orquestra EDA → pré-processamento → treino → avaliação → MLflow (ligado por padrão) |
 | `src/` | EDA, pré-processamento, treino, avaliação |
 | `notebooks/` | Notebook exploratório |
 | `dataset_ambiental.csv` | CSV padrão de treino |
@@ -85,8 +85,18 @@ python main.py
 Flags úteis:
 
 - `--csv CAMINHO` — outro CSV
-- `--no-mlflow` — não registra no MLflow
-- `--mlflow-uri URI` — ex.: `file:./mlruns` ou `http://127.0.0.1:5000`
+- `--no-mlflow` — desliga o MLflow (ativo por padrão; URI `file:./mlruns`)
+- `--mlflow-uri URI` — sobrescreve a URI de tracking (padrão `file:./mlruns`)
+
+### Ver runs no MLflow
+
+Depois de `python main.py`, abra a UI de tracking (os runs ficam em `./mlruns`, ignorado pelo Git):
+
+```bash
+mlflow ui --backend-store-uri file:./mlruns --host 127.0.0.1 --port 5000
+```
+
+Em seguida abra **http://127.0.0.1:5000**. Os experimentos são nomeados por modelo (ex.: `qualidade_ambiental_xgboost`).
 
 Exportar artefatos (modelo padrão: XGBoost, mesmo fluxo de limpeza do `main.py`):
 
@@ -182,7 +192,7 @@ Para o pacote Gradio, rode antes `python scripts/export_hf_artifacts.py` para cr
 - Python 3.11, pandas, NumPy  
 - scikit-learn, XGBoost  
 - matplotlib, seaborn  
-- MLflow (opcional)  
+- MLflow (ativo por padrão; desligar com `--no-mlflow`)  
 - FastAPI, Uvicorn, joblib  
 - Docker  
 - Gradio (pacote opcional em `hf_space/`)

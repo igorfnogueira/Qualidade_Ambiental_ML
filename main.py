@@ -49,16 +49,17 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--mlflow-uri",
-        default=None,
+        default="file:./mlruns",
         help=(
-            "URI do tracking MLflow (ex.: file:./mlruns ou http://127.0.0.1:5000). "
-            "Se omitido, usa MLFLOW_TRACKING_URI ou padrão do MLflow."
+            "URI do tracking MLflow (padrão: file:./mlruns). "
+            "Exemplos: file:./mlruns ou http://127.0.0.1:5000. "
+            "Sobrescreve MLFLOW_TRACKING_URI quando informado."
         ),
     )
     parser.add_argument(
         "--no-mlflow",
         action="store_true",
-        help="Não registra runs nem modelos no MLflow.",
+        help="Desliga o registro no MLflow (ativo por padrão).",
     )
     parser.add_argument(
         "--mlflow-study",
@@ -95,7 +96,7 @@ def main() -> None:
     if not args.no_mlflow:
         configure_tracking(args.mlflow_uri)
         print("\n=== MLflow ===")
-        print(f"Tracking URI: {args.mlflow_uri or '(padrão / env MLFLOW_TRACKING_URI)'}")
+        print(f"Tracking URI: {args.mlflow_uri}")
 
     rows: list[dict[str, str | float]] = []
     for name in MODEL_BUILDERS.keys():
