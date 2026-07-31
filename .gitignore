@@ -174,6 +174,16 @@ cython_debug/
 Qualidade_Ambiental_ML/
 hf_docker_space/HF_Qualidade_Ambiental_ML/
 
+# Espelho Docker do Space: só README.md (YAML) fica versionado; o resto é gerado por sync
+hf_docker_space/qa_api/
+hf_docker_space/web/
+hf_docker_space/artifacts/
+hf_docker_space/Dockerfile
+hf_docker_space/requirements.api.txt
+
+# Artefatos Gradio: gerados por scripts/export_hf_artifacts.py
+hf_space/artifacts/
+
 # API legada na raiz; deploy e Docker usam qa_api/
 api/
 

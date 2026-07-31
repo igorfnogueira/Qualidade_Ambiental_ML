@@ -6,7 +6,10 @@
 
 Pipeline de **classificação** supervisionada que prevê a qualidade ambiental (`Qualidade_Ambiental`) a partir de variáveis de sensores — temperatura, umidade, gases (CO₂, CO, NO₂, SO₂, O₃) e pressão atmosférica. Inclui EDA, treino com vários modelos, rastreamento opcional no **MLflow** e uma aplicação web com **FastAPI** para inferência com modelo serializado.
 
+**Repositório:** [igorfnogueira/ml-python-environmental-quality](https://github.com/igorfnogueira/ml-python-environmental-quality)  
 **Demo (Hugging Face Space):** [igorfn20/Qualidade_Ambiental_ML](https://huggingface.co/spaces/igorfn20/Qualidade_Ambiental_ML)
+
+> **Uso educacional.** Os dados e resultados são ilustrativos e podem não corresponder a situações ambientais reais.
 
 ---
 
@@ -40,15 +43,16 @@ O dataset tem **10.000** linhas e **9** colunas (**8** features + alvo). Após c
 | `mlflow_utils.py` | Helpers de logging no MLflow |
 | `qa_api/` | App FastAPI (`GET /`, `POST /predict`) |
 | `web/` | Interface HTML / CSS / JS |
-| `artifacts/` | `model.pkl`, `label_encoder.pkl`, `metadata.json` |
+| `artifacts/` | Fonte da verdade para inferência (`model.pkl`, `label_encoder.pkl`, `metadata.json`) |
 | `requirements.txt` | Dependências de treino / EDA |
 | `requirements.api.txt` | Dependências da API / inferência |
 | `Dockerfile` | Imagem Uvicorn na porta **7860** |
-| `hf_docker_space/` | Pacote espelho para o Space Docker no HF |
-| `scripts/sync_hf_docker_space.ps1` | Sincroniza fontes em `hf_docker_space/` |
+| `hf_docker_space/README.md` | YAML do Space Docker no HF; demais arquivos são **gerados** pelo sync |
+| `hf_space/` | Pacote Gradio alternativo (código + assets); `artifacts/` ali é **gerado** pelo export |
+| `scripts/sync_hf_docker_space.ps1` | Monta a pasta completa do Space Docker a partir da raiz |
+| `scripts/export_hf_artifacts.py` | Retreina e grava artefatos (ex.: em `hf_space/artifacts/`) |
 | `scripts/push_hf_space.ps1` | Ajuda no push do clone do Space (`HF_TOKEN`) |
-| `hf_space/` | Pacote Gradio alternativo (referência; deploy principal é Docker + `qa_api`) |
-| `scripts/export_hf_artifacts.py` | Retreina e exporta artefatos |
+| `LICENSE` | MIT |
 
 ---
 
@@ -159,11 +163,15 @@ Limites hard rejeitam a requisição; limites soft só geram avisos e a prediç�
 
 Space público: [huggingface.co/spaces/igorfn20/Qualidade_Ambiental_ML](https://huggingface.co/spaces/igorfn20/Qualidade_Ambiental_ML).
 
-Para atualizar o Space a partir deste repositório:
+O deploy principal é **Docker + FastAPI** (`qa_api`). A árvore Gradio em `hf_space/` é uma alternativa opcional.
 
-1. Execute `scripts/sync_hf_docker_space.ps1` (copia as fontes e gera um `README.md` mínimo do Space com o YAML Docker exigido).
-2. Copie o conteúdo de `hf_docker_space/` para o clone local do Space.
+Para atualizar o Space Docker a partir deste repositório:
+
+1. Execute `scripts/sync_hf_docker_space.ps1` (copia `qa_api`, `web`, `artifacts`, `Dockerfile`, `requirements.api.txt` e regenera o `README.md` do Space com YAML Docker).
+2. Copie o conteúdo gerado de `hf_docker_space/` para o clone local do Space.
 3. Faça commit e push (token HF com escrita), ou use `push_hf_space.ps1` com `$env:HF_TOKEN`.
+
+Para o pacote Gradio, rode antes `python scripts/export_hf_artifacts.py` para criar `hf_space/artifacts/`.
 
 **Não** coloque o front matter YAML do Hugging Face neste README da raiz do GitHub.
 
@@ -183,4 +191,4 @@ Para atualizar o Space a partir deste repositório:
 
 ## Licença
 
-Defina a licença adequada à sua instituição ou portfólio (ex.: MIT).
+MIT — ver [LICENSE](LICENSE).

@@ -1,4 +1,4 @@
-﻿---
+---
 title: Qualidade Ambiental (IA)
 emoji: 🌍
 colorFrom: green

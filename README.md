@@ -6,7 +6,10 @@
 
 Supervised **classification** pipeline that predicts environmental quality (`Qualidade_Ambiental`) from sensor variables — temperature, humidity, gases (CO₂, CO, NO₂, SO₂, O₃), and atmospheric pressure. Includes EDA, multi-model training, optional **MLflow** tracking, and a **FastAPI** web app for inference with a serialized model.
 
+**Repository:** [igorfnogueira/ml-python-environmental-quality](https://github.com/igorfnogueira/ml-python-environmental-quality)  
 **Live demo (Hugging Face Space):** [igorfn20/Qualidade_Ambiental_ML](https://huggingface.co/spaces/igorfn20/Qualidade_Ambiental_ML)
+
+> **Educational use.** The data and outputs are illustrative and may not reflect real environmental conditions.
 
 ---
 
@@ -40,15 +43,16 @@ The dataset ships with **10,000** rows and **9** columns (**8** features + targe
 | `mlflow_utils.py` | MLflow logging helpers |
 | `qa_api/` | FastAPI app (`GET /`, `POST /predict`) |
 | `web/` | HTML / CSS / JS UI served by the API |
-| `artifacts/` | `model.pkl`, `label_encoder.pkl`, `metadata.json` |
+| `artifacts/` | Source-of-truth inference artifacts (`model.pkl`, `label_encoder.pkl`, `metadata.json`) |
 | `requirements.txt` | Training / EDA dependencies |
 | `requirements.api.txt` | API / inference dependencies |
 | `Dockerfile` | Uvicorn image on port **7860** |
-| `hf_docker_space/` | Mirror package for the Docker-based HF Space |
-| `scripts/sync_hf_docker_space.ps1` | Syncs sources into `hf_docker_space/` |
-| `scripts/push_hf_space.ps1` | Helps push the local Space clone (`HF_TOKEN`) |
-| `hf_space/` | Alternative Gradio package (reference; primary deploy is Docker + `qa_api`) |
-| `scripts/export_hf_artifacts.py` | Retrain and export artifacts |
+| `hf_docker_space/README.md` | Hugging Face Docker Space YAML only; other files are **generated** by sync |
+| `hf_space/` | Alternative Gradio package (code + assets); `artifacts/` there is **generated** by export |
+| `scripts/sync_hf_docker_space.ps1` | Builds the full Docker Space folder from the repo root |
+| `scripts/export_hf_artifacts.py` | Retrains and writes artifacts (e.g. into `hf_space/artifacts/`) |
+| `scripts/push_hf_space.ps1` | Helps push a local Space clone (`HF_TOKEN`) |
+| `LICENSE` | MIT |
 
 ---
 
@@ -159,11 +163,15 @@ Hard limits reject the request; soft limits only add warnings and still run pred
 
 Public Space: [huggingface.co/spaces/igorfn20/Qualidade_Ambiental_ML](https://huggingface.co/spaces/igorfn20/Qualidade_Ambiental_ML).
 
-To refresh the Space from this repo:
+Primary deploy path is **Docker + FastAPI** (`qa_api`). The Gradio tree under `hf_space/` is an optional alternative.
 
-1. Run `scripts/sync_hf_docker_space.ps1` (writes app sources plus a minimal Space `README.md` with the required Docker YAML front matter).
-2. Copy `hf_docker_space/` contents into your local Space clone.
+To refresh the Docker Space from this repo:
+
+1. Run `scripts/sync_hf_docker_space.ps1` (copies `qa_api`, `web`, `artifacts`, `Dockerfile`, `requirements.api.txt`, and regenerates the Space `README.md` with Docker YAML).
+2. Copy the generated `hf_docker_space/` contents into your local Space clone.
 3. Commit and push (HF write token), or use `push_hf_space.ps1` with `$env:HF_TOKEN`.
+
+For the Gradio package, run `python scripts/export_hf_artifacts.py` first so `hf_space/artifacts/` exists.
 
 Do **not** put Hugging Face YAML front matter in this GitHub root README.
 
@@ -183,4 +191,4 @@ Do **not** put Hugging Face YAML front matter in this GitHub root README.
 
 ## License
 
-Choose and state a license appropriate for your institution or personal portfolio (e.g. MIT).
+MIT — see [LICENSE](LICENSE).
